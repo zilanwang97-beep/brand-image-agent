@@ -139,7 +139,7 @@ Your task:
    - Beauty/skincare → bathroom vanity, soft feminine setting
    - Toys/gifts/novelty → playful lifestyle scene, gift context
 4. Generate a specific image editing prompt that:
-   - Keeps the product EXACTLY as-is (do not change product shape, color, or design)
+   - Keeps the product EXACTLY as-is (do not change product shape, color, graphic, or design details)
    - Replaces only the background according to the scene requirement
    - Matches the brand's visual language
    - Adapts the scene naturally to fit this specific product type
