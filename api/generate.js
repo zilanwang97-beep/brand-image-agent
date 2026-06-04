@@ -1,13 +1,27 @@
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Content-Type": "application/json",
+};
+
 export const config = { runtime: "edge" };
 
 export default async function handler(req) {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: CORS_HEADERS });
+  }
+  
+  export const config = { runtime: "edge" };
+
+export default async function handler(req) {
   if (req.method !== "POST") {
-    return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405 });
+    return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: CORS_HEADERS });
   }
 
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
-    return new Response(JSON.stringify({ error: "Missing OPENAI_API_KEY" }), { status: 500 });
+    return new Response(JSON.stringify({ error: "Missing OPENAI_API_KEY" }), { status: 500, headers: CORS_HEADERS });
   }
 
   try {
@@ -17,7 +31,7 @@ export default async function handler(req) {
     const text = incoming.get("text")?.trim() || "";
 
     if (!productFile) {
-      return new Response(JSON.stringify({ error: "Product image required" }), { status: 400 });
+      return new Response(JSON.stringify({ error: "Product image required" }), { status: 400, headers: CORS_HEADERS });
     }
 
     // ── Step 1: Agent 分析产品图特征 ──
@@ -34,7 +48,7 @@ export default async function handler(req) {
 
   } catch (e) {
     console.error("Agent error:", e);
-    return new Response(JSON.stringify({ error: e?.message || "Agent failed" }), { status: 500 });
+    return new Response(JSON.stringify({ error: e?.message || "Agent failed" }), { status: 500, headers: CORS_HEADERS });
   }
 }
 
