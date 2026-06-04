@@ -5,8 +5,7 @@ const CORS_HEADERS = {
   "Content-Type": "application/json",
 };
 
-export const config = { runtime: "edge" };
-
+export const config = { maxDuration: 60 };
 const SCENE_PROMPTS = {
   ins_square: {
     size: "1024x1024",
