@@ -10,11 +10,11 @@ export const config = { runtime: "edge" };
 const SCENE_PROMPTS = {
   ins_square: {
     size: "1024x1024",
-    direction: "Square 1:1 format for Instagram feed. Clean minimal background, product centered, soft natural lighting.",
+    direction: "Instagram feed square post. Place product on a clean marble or wood surface with soft side lighting, minimal props like dried flowers or a linen cloth nearby. Bright airy aesthetic, white or cream tones.",
   },
   ins_story: {
     size: "1024x1024",
-    direction: "Vertical story format for Instagram. Lifestyle scene, warm natural light, immersive atmosphere, leave space for text.",
+    direction: "Instagram Story lifestyle shot. Product casually placed in a real home setting — on a bedside table, window sill, or cozy sofa corner. Warm afternoon sunlight streaming in, lived-in authentic feel. Negative space at top and bottom for text.",
   },
   ecommerce_main: {
     size: "1024x1024",
@@ -130,13 +130,20 @@ Brand profile:
 Scene requirement: ${sceneDirection}
 
 Your task:
-1. Identify the product type, color, material, and shape
+1. Identify the product type, category, target audience, and visual characteristics
 2. ${refBase64List.length > 0 ? "Extract the visual style, lighting, and color tone from brand reference images" : "Use the brand keywords to determine visual style"}
-3. Generate a specific image editing prompt that:
+3. Based on the product type, determine what background and props would be most natural for THIS specific product:
+   - Electronic products → clean desk setup, minimal tech environment
+   - Food/drinks → kitchen counter, dining table, natural ingredients nearby
+   - Clothing/accessories → lifestyle setting, flat lay or worn context
+   - Home goods/decor → interior scene matching product style
+   - Beauty/skincare → bathroom vanity, soft feminine setting
+   - Toys/gifts/novelty → playful lifestyle scene, gift context
+4. Generate a specific image editing prompt that:
    - Keeps the product EXACTLY as-is (do not change product shape, color, or design)
    - Replaces only the background according to the scene requirement
    - Matches the brand's visual language
-   - Is optimized for the specific scene format
+   - Adapts the scene naturally to fit this specific product type
 
 Return ONLY the prompt text. Start with "Product photography:"`,
     },
