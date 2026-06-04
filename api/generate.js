@@ -10,27 +10,27 @@ export const config = { runtime: "edge" };
 const SCENE_PROMPTS = {
   ins_square: {
     size: "1024x1024",
-    direction: "Square 1:1 format for Instagram feed. Clean minimal background, product centered, soft natural lighting. Lifestyle feel, visually appealing for social media.",
+    direction: "Square 1:1 format for Instagram feed. Clean minimal background, product centered, soft natural lighting.",
   },
   ins_story: {
-    size: "1024x1792",
-    direction: "Vertical 9:16 format for Instagram Story. Leave space at top and bottom for text overlay. Lifestyle scene, warm natural light, immersive atmosphere.",
+    size: "1024x1024",
+    direction: "Vertical story format for Instagram. Lifestyle scene, warm natural light, immersive atmosphere, leave space for text.",
   },
   ecommerce_main: {
     size: "1024x1024",
-    direction: "E-commerce main product image. Clean white or very light neutral background, product clearly visible, professional studio lighting, no distractions.",
+    direction: "E-commerce main product image. Clean white or very light neutral background, professional studio lighting.",
   },
   detail: {
     size: "1024x1024",
-    direction: "Product detail close-up shot. Extreme focus on texture, material, and craftsmanship. Macro-style composition, sharp details, soft bokeh background.",
+    direction: "Product detail close-up shot. Extreme focus on texture, material, and craftsmanship. Sharp details, soft background.",
   },
   poster: {
-    size: "1024x1365",
-    direction: "3:4 promotional poster format. Strong compositional sense, dramatic lighting, premium brand feel. Leave negative space for brand copy and headline text.",
+    size: "1024x1024",
+    direction: "Promotional poster format. Strong compositional sense, dramatic lighting, premium brand feel, negative space for text.",
   },
   xiaohongshu: {
-    size: "1024x1365",
-    direction: "3:4 format for Xiaohongshu (Little Red Book). Warm natural lifestyle scene, cozy and authentic feel, natural daylight, relatable everyday setting.",
+    size: "1024x1024",
+    direction: "Xiaohongshu lifestyle scene. Warm natural daylight, cozy and authentic feel, relatable everyday setting.",
   },
 };
 
