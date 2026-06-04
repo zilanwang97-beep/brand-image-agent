@@ -121,7 +121,7 @@ async function generateWithRetry(apiKey, productFile, prompt, maxRetries) {
         : `${prompt} Ultra realistic, clean composition, professional studio quality.`;
 
       const form = new FormData();
-      form.append("model", "dall-e-2");
+      form.append("model", "gpt-image-1");
       form.append("prompt", adjustedPrompt.slice(0, 1000));
       form.append("size", "1024x1024");
       form.append("image", productFile, "product.png");
@@ -135,9 +135,10 @@ async function generateWithRetry(apiKey, productFile, prompt, maxRetries) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error?.message || "Image generation failed");
 
-      const url = data?.data?.[0]?.url;
-if (!url) throw new Error("No image returned");
-return url;
+      const b64 = data?.data?.[0]?.b64_json;
+      if (!b64) throw new Error("No image returned");
+
+      return `data:image/png;base64,${b64}`;
 
     } catch (e) {
       lastError = e;
