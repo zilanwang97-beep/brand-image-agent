@@ -55,6 +55,14 @@ export default async function handler(req) {
   }
 
   try {
+  if (!apiKey) {
+    return new Response(JSON.stringify({ error: "Missing OPENAI_API_KEY" }), {
+      status: 500,
+      headers: CORS_HEADERS,
+    });
+  }
+
+  try {
     const incoming = await req.formData();
     const productFile = incoming.get("product");
     const brandKeywords = incoming.get("brand_keywords") || "";
