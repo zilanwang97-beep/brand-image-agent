@@ -124,7 +124,6 @@ async function generateWithRetry(apiKey, productFile, prompt, maxRetries) {
       form.append("model", "dall-e-2");
       form.append("prompt", adjustedPrompt.slice(0, 1000));
       form.append("size", "1024x1024");
-      form.append("response_format", "b64_json");
       form.append("image", productFile, "product.png");
 
       const res = await fetch("https://api.openai.com/v1/images/edits", {
@@ -136,10 +135,9 @@ async function generateWithRetry(apiKey, productFile, prompt, maxRetries) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error?.message || "Image generation failed");
 
-      const b64 = data?.data?.[0]?.b64_json;
-      if (!b64) throw new Error("No image returned");
-
-      return `data:image/png;base64,${b64}`;
+      const url = data?.data?.[0]?.url;
+if (!url) throw new Error("No image returned");
+return url;
 
     } catch (e) {
       lastError = e;
