@@ -10,27 +10,27 @@ export const config = { runtime: "edge" };
 const SCENE_PROMPTS = {
   ins_square: {
     size: "1024x1024",
-    direction: "Instagram feed square post. Place product on a clean marble or wood surface with soft side lighting, minimal props like dried flowers or a linen cloth nearby. Bright airy aesthetic, white or cream tones.",
+    direction: "Instagram feed square post. Bright airy aesthetic, minimal and clean composition, soft natural side lighting.",
   },
   ins_story: {
     size: "1024x1024",
-    direction: "Instagram Story lifestyle shot. Product casually placed in a real home setting — on a bedside table, window sill, or cozy sofa corner. Warm afternoon sunlight streaming in, lived-in authentic feel. Negative space at top and bottom for text.",
+    direction: "Instagram Story lifestyle shot. Authentic real-life home environment, warm afternoon sunlight, lived-in feel. Leave space at top and bottom for text overlay.",
   },
   ecommerce_main: {
     size: "1024x1024",
-    direction: "E-commerce main product image. Clean white or very light neutral background, professional studio lighting.",
+    direction: "E-commerce hero image. Pure white or very light seamless background, product centered, clean professional studio lighting, no props.",
   },
   detail: {
     size: "1024x1024",
-    direction: "Product detail close-up shot. Extreme focus on texture, material, and craftsmanship. Sharp details, soft background.",
+    direction: "Detail close-up shot. Macro-style, shallow depth of field, sharp product surface and texture, completely blurred background.",
   },
   poster: {
     size: "1024x1024",
-    direction: "Promotional poster format. Strong compositional sense, dramatic lighting, premium brand feel, negative space for text.",
+    direction: "Brand campaign poster. Dramatic lighting, strong negative space for headline text, premium editorial feel.",
   },
   xiaohongshu: {
     size: "1024x1024",
-    direction: "Xiaohongshu lifestyle scene. Warm natural daylight, cozy and authentic feel, relatable everyday setting.",
+    direction: "Xiaohongshu lifestyle scene. Natural window light, warm and cozy home atmosphere, authentic and relatable everyday setting.",
   },
 };
 
