@@ -1,15 +1,7 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/generate.js",
-      "use": "@vercel/node"
+  "functions": {
+    "api/generate.js": {
+      "runtime": "edge"
     }
-  ],
-  "routes": [
-    {
-      "src": "/api/generate",
-      "dest": "/api/generate.js"
-    }
-  ]
+  }
 }
