@@ -11,17 +11,20 @@ export default async function handler(req) {
   if (req.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: CORS_HEADERS });
   }
-  
-  export const config = { runtime: "edge" };
 
-export default async function handler(req) {
   if (req.method !== "POST") {
-    return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: CORS_HEADERS });
+    return new Response(JSON.stringify({ error: "Method not allowed" }), {
+      status: 405,
+      headers: CORS_HEADERS,
+    });
   }
 
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
-    return new Response(JSON.stringify({ error: "Missing OPENAI_API_KEY" }), { status: 500, headers: CORS_HEADERS });
+    return new Response(JSON.stringify({ error: "Missing OPENAI_API_KEY" }), {
+      status: 500,
+      headers: CORS_HEADERS,
+    });
   }
 
   try {
@@ -31,28 +34,34 @@ export default async function handler(req) {
     const text = incoming.get("text")?.trim() || "";
 
     if (!productFile) {
-      return new Response(JSON.stringify({ error: "Product image required" }), { status: 400, headers: CORS_HEADERS });
+      return new Response(JSON.stringify({ error: "Product image required" }), {
+        status: 400,
+        headers: CORS_HEADERS,
+      });
     }
 
-    // ── Step 1: Agent 分析产品图特征 ──
+    // Agent 步骤一：用 GPT-4o Vision 分析图片，自动生成最优 prompt
     const productBase64 = await fileToBase64(productFile);
-    const analysisPrompt = await analyzeImages(apiKey, productBase64, referenceFile ? await fileToBase64(referenceFile) : null, text);
+    const referenceBase64 = referenceFile ? await fileToBase64(referenceFile) : null;
+    const analysisPrompt = await analyzeImages(apiKey, productBase64, referenceBase64, text);
 
-    // ── Step 2: Agent 生成背景替换图，失败自动重试 ──
+    // Agent 步骤二：生成图片，失败自动重试
     const resultImage = await generateWithRetry(apiKey, productFile, analysisPrompt, 2);
 
     return new Response(JSON.stringify({ image: resultImage, prompt: analysisPrompt }), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: CORS_HEADERS,
     });
 
   } catch (e) {
     console.error("Agent error:", e);
-    return new Response(JSON.stringify({ error: e?.message || "Agent failed" }), { status: 500, headers: CORS_HEADERS });
+    return new Response(JSON.stringify({ error: e?.message || "Agent failed" }), {
+      status: 500,
+      headers: CORS_HEADERS,
+    });
   }
 }
 
-// Agent 步骤一：用 GPT-4o Vision 分析图片，自动生成最优 prompt
 async function analyzeImages(apiKey, productBase64, referenceBase64, userText) {
   const messages = [
     {
@@ -61,7 +70,7 @@ async function analyzeImages(apiKey, productBase64, referenceBase64, userText) {
         {
           type: "text",
           text: `You are a professional product photography director. Analyze the product image and generate an optimal image editing prompt.
-          
+
 Product image is attached. ${referenceBase64 ? "A reference style image is also attached." : ""}
 User's style direction: "${userText || "professional brand campaign"}"
 
@@ -102,13 +111,14 @@ Return ONLY the prompt text, nothing else. The prompt must start with "Product p
   return data.choices[0].message.content.trim();
 }
 
-// Agent 步骤二：生成图片，失败自动重试并调整 prompt
 async function generateWithRetry(apiKey, productFile, prompt, maxRetries) {
   let lastError = null;
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
-      const adjustedPrompt = attempt === 0 ? prompt : `${prompt} Ultra realistic, clean composition, professional studio quality.`;
+      const adjustedPrompt = attempt === 0
+        ? prompt
+        : `${prompt} Ultra realistic, clean composition, professional studio quality.`;
 
       const form = new FormData();
       form.append("model", "dall-e-2");
@@ -140,7 +150,6 @@ async function generateWithRetry(apiKey, productFile, prompt, maxRetries) {
   throw lastError;
 }
 
-// 工具函数：File 转 base64
 async function fileToBase64(file) {
   const buffer = await file.arrayBuffer();
   const bytes = new Uint8Array(buffer);
